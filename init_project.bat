@@ -6,28 +6,6 @@ echo    프로젝트 초기화 스크립트
 echo ====================================
 echo.
 
-:: 환경 설정 파일 생성
-echo environment.yml 파일 생성 중...
-(
-echo name: pyone-t5
-echo channels:
-echo   - conda-forge
-echo   - defaults
-echo dependencies:
-echo   - python=3.11.8
-echo   - fastapi^>=0.110.0
-echo   - uvicorn^>=0.27.0
-echo   - tensorflow^>=2.15.0,^<2.16.0
-echo   - numpy^>=1.22.0
-echo   - pandas=2.2.2
-echo   - pillow^>=10.0.0
-echo   - pip
-echo   - pip:
-echo     - python-multipart^>=0.0.9
-echo     - tensorflow-io-gcs-filesystem==0.34.0
-) > environment.yml
-echo environment.yml 파일이 생성되었습니다.
-echo.
 
 :: pyenv 설치 확인
 echo 1. pyenv 설치 여부 확인 중...
