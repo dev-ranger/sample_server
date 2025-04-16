@@ -1,9 +1,9 @@
-name: pyone-t6
+name: sample_project
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.11.8
+  - python=3.11.9
   - fastapi>=0.110.0
   - uvicorn>=0.27.0
   - tensorflow>=2.15.0,<2.16.0

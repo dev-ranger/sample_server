@@ -2,82 +2,83 @@
 setlocal enabledelayedexpansion
 
 echo ====================================
-echo    프로젝트 초기화 스크립트
+echo    Project Initialization Script
 echo ====================================
 echo.
 
 
-:: pyenv 설치 확인
-echo 1. pyenv 설치 여부 확인 중...
+
+:: Check if pyenv is installed
+echo 1. Checking if pyenv is installed...
 where pyenv >nul 2>nul
 if %ERRORLEVEL% EQU 0 (
-    echo pyenv가 설치되어 있습니다.
-    echo Python 3.11.8 설치 중...
+    echo pyenv is installed.
+    echo Installing Python 3.11.9...
     
-    :: 이미 설치된 버전인지 확인
-    pyenv versions | findstr "3.11.8" >nul
+    :: Check if version is already installed
+    pyenv versions | findstr "3.11.9" >nul
     if %ERRORLEVEL% EQU 0 (
-        echo Python 3.11.8이 이미 설치되어 있습니다.
+        echo Python 3.11.9 is already installed.
     ) else (
-        echo Python 3.11.8 설치 중...
-        pyenv install 3.11.8
+        echo Installing Python 3.11.9...
+        pyenv install 3.11.9
         if %ERRORLEVEL% NEQ 0 (
-            echo Python 3.11.8 설치에 실패했습니다.
+            echo Failed to install Python 3.11.9.
             goto :exit_script
         )
     )
     
-    :: 로컬 Python 버전을 3.11.8로 설정
-    echo 현재 프로젝트의 Python 버전을 3.11.8로 설정 중...
-    pyenv local 3.11.8
-    echo Python 버전이 3.11.8로 설정되었습니다.
+    :: Set local Python version to 3.11.9
+    echo Setting Python version to 3.11.9 for this project...
+    pyenv local 3.11.9
+    echo Python version has been set to 3.11.9.
 ) else (
-    echo pyenv가 설치되어 있지 않습니다.
-    echo pyenv를 먼저 설치한 후 이 스크립트를 다시 실행하세요.
-    echo pyenv 설치 방법: https://github.com/pyenv-win/pyenv-win#installation
+    echo pyenv is not installed.
+    echo Please install pyenv first and then run this script again.
+    echo Installation guide: https://github.com/pyenv-win/pyenv-win#installation
     goto :exit_script
 )
 
 echo.
 
-:: conda 설치 확인
-echo 2. conda 설치 여부 확인 중...
+:: Check if conda is installed
+echo 2. Checking if conda is installed...
 where conda >nul 2>nul
 if %ERRORLEVEL% EQU 0 (
-    echo conda가 설치되어 있습니다.
+    echo conda is installed.
     
-    :: 기존 환경이 있는지 확인하고 제거
+    :: Check if environment already exists and remove it
     conda env list | findstr "pyone-t5" >nul
     if %ERRORLEVEL% EQU 0 (
-        echo 기존 pyone-t5 환경을 제거합니다...
+        echo Removing existing pyone-t5 environment...
         call conda remove --name pyone-t5 --all -y
     )
     
-    :: 새 환경 생성 및 패키지 설치
-    echo conda 환경 생성 및 패키지 설치 중...
+    :: Create new environment and install packages
+    echo Creating conda environment and installing packages...
     call conda env create -f environment.yml
     
     if %ERRORLEVEL% NEQ 0 (
-        echo conda 환경 생성에 실패했습니다.
+        echo Failed to create conda environment.
         goto :exit_script
     )
     
     echo.
-    echo 환경이 성공적으로 생성되었습니다!
-    echo 환경을 활성화하려면 다음 명령어를 실행하세요:
+    echo Environment has been successfully created!
+    echo To activate the environment, run:
     echo   conda activate pyone-t5
 ) else (
-    echo conda가 설치되어 있지 않습니다.
-    echo conda를 먼저 설치한 후 이 스크립트를 다시 실행하세요.
-    echo conda 설치 방법: https://docs.conda.io/en/latest/miniconda.html
+    echo conda is not installed.
+    echo Please install conda first and then run this script again.
+    echo Installation guide: https://docs.conda.io/en/latest/miniconda.html
     goto :exit_script
 )
 
 echo.
-echo 초기화가 완료되었습니다!
+echo Initialization completed!
 goto :eof
 
 :exit_script
 echo.
-echo 스크립트를 종료합니다.
+echo Exiting script.
 exit /b 1
